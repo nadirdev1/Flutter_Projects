@@ -1,4 +1,6 @@
 import 'package:app2_questionnaire/data/questions.dart';
+import 'package:app2_questionnaire/questions_summary/question_summary.dart';
+
 import 'package:flutter/material.dart';
 
 class ResultScreen extends StatelessWidget {
@@ -9,16 +11,17 @@ class ResultScreen extends StatelessWidget {
   });
 
   final List<String> chosenAnswers;
-  final void Function() switchScreen;
+  final VoidCallback switchScreen;
 
   List<Map<String, Object>> getSummaryData() {
+    print(chosenAnswers.length);
     final List<Map<String, Object>> summary = [
       for (var i = 0; i < chosenAnswers.length; i++)
         {
           'question_index': i,
-          'question': questions[i],
-          'correctAnswer': questions[i].answers[0],
-          'chosenAnswer': chosenAnswers[i],
+          'question': questions[i].text,
+          'correct-answer': questions[i].answers[0],
+          'user-answer': chosenAnswers[i],
         },
     ];
 
@@ -27,6 +30,11 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final summaryData = getSummaryData();
+    final numTotalQuestions = questions.length;
+    final correctQuestions = summaryData.where((entry)=>entry['user-answer']==entry['correct-answer']).length;
+
+
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -34,11 +42,11 @@ class ResultScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("You answered X of Y questions correctly!"),
+            Text("You answered $correctQuestions of $numTotalQuestions questions correctly!"),
             const SizedBox(
               height: 30,
             ),
-            const Text("List of answers and questions..."),
+            QuestionSummary(summaryData: summaryData),
             const SizedBox(
               height: 30,
             ),

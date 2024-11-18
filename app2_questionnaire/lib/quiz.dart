@@ -20,10 +20,9 @@ class _QuizState extends State<Quiz> {
       'start-screen': StartScreen(switchScreen),
       'questions-screen': QuestionsScreen(onChooseAnswer: chooseAnswer),
       'results-screen': ResultScreen(
-        chosenAnswers: selectedAnswers,
-        switchScreen:switchScreen
-      ),
+          chosenAnswers: selectedAnswers, switchScreen: switchScreen),
     };
+    print("init $activeScreen");
     super.initState();
   }
 
@@ -32,20 +31,24 @@ class _QuizState extends State<Quiz> {
 
   void switchScreen() {
     setState(() {
-      selectedAnswers = [];
+     // selectedAnswers = [];
+
       activeScreen =
           activeScreen == 'start-screen' ? 'questions-screen' : 'start-screen';
     });
+    print("switchScreen out  : $activeScreen");
   }
 
   void chooseAnswer(String answer) {
     selectedAnswers.add(answer);
+    print("chooseAnswer in : $activeScreen");
 
     if (selectedAnswers.length == questions.length) {
       setState(() {
         activeScreen = 'results-screen';
       });
     }
+    print("chooseAnswer out : $activeScreen");
   }
 
   @override
