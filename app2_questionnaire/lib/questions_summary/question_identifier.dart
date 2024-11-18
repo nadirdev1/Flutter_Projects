@@ -27,7 +27,7 @@ class QuestionIdentifier extends StatelessWidget {
       child: Text(questionNumber.toString(),style:const TextStyle(
         fontWeight: FontWeight.bold,
         color: Color.fromARGB(255, 22, 2,56),
-        
+
       ))
     );
   }

@@ -1,4 +1,5 @@
 import 'package:app2_questionnaire/questions_summary/question_identifier.dart';
+import 'package:app2_questionnaire/questions_summary/summary_item.dart';
 import 'package:flutter/material.dart';
 
 class QuestionSummary extends StatelessWidget {
@@ -13,25 +14,7 @@ class QuestionSummary extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: summaryData
-              .map((data) => Row(
-                    children: [
-                      QuestionIdentifier(questionIndex:data['question_index'] as int,isCorrectAnswer:  true),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Text(data['question'] as String),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              data['user-answer'] as String,
-                            ),
-                            Text(data['correct-answer'] as String)
-                          ],
-                        ),
-                      ),
-                    ],
-                  ))
+              .map((data) => SummaryItem(itemData: data))
               .toList(),
         ),
       ),
