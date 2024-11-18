@@ -1,5 +1,6 @@
 import 'package:app2_questionnaire/data/questions.dart';
 import 'package:app2_questionnaire/questions_screen.dart';
+import 'package:app2_questionnaire/result_screen.dart';
 import 'package:app2_questionnaire/start_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,33 +12,44 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  Map<String, Widget> screens = {};
+
+  @override
+  void initState() {
+    screens = {
+      'start-screen': StartScreen(switchScreen),
+      'questions-screen': QuestionsScreen(onChooseAnswer: chooseAnswer),
+      'results-screen': ResultScreen(
+        chosenAnswers: selectedAnswers,
+        switchScreen:switchScreen
+      ),
+    };
+    super.initState();
+  }
+
   List<String> selectedAnswers = [];
   var activeScreen = 'start-screen';
 
   void switchScreen() {
     setState(() {
-        activeScreen = 'questions-screen';
-
+      selectedAnswers = [];
+      activeScreen =
+          activeScreen == 'start-screen' ? 'questions-screen' : 'start-screen';
     });
   }
 
   void chooseAnswer(String answer) {
     selectedAnswers.add(answer);
-if(selectedAnswers.length == questions.length){
-  setState(() {
-    selectedAnswers = [];
-    activeScreen = 'start-screen';
-  });
-}
+
+    if (selectedAnswers.length == questions.length) {
+      setState(() {
+        activeScreen = 'results-screen';
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final screens = {
-      'start-screen': StartScreen(switchScreen),
-      'questions-screen': QuestionsScreen(onChooseAnswer: chooseAnswer),
-      'feed-back-screen': const Text("END"),
-    };
     return MaterialApp(
       home: Scaffold(
         body: Container(
@@ -52,10 +64,6 @@ if(selectedAnswers.length == questions.length){
             ),
           ),
           child: screens[activeScreen] ?? const Text("Unknown screen"),
-
-          // activeScreen == 'start-screen'
-          //     ? StartScreen(switchScreen)
-          //     : QuestionsScreen(chooseAnswer: chooseAnswer,),
         ),
       ),
     );
