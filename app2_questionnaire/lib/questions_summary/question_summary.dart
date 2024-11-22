@@ -1,4 +1,3 @@
-import 'package:app2_questionnaire/questions_summary/question_identifier.dart';
 import 'package:app2_questionnaire/questions_summary/summary_item.dart';
 import 'package:flutter/material.dart';
 
