@@ -3,8 +3,6 @@ import 'package:app3_expense_tracker/models/expense_bucket.dart';
 import 'package:app3_expense_tracker/widgets/chart/chart_bar.dart';
 import 'package:flutter/material.dart';
 
-
-
 class Chart extends StatelessWidget {
   const Chart({super.key, required this.expenses});
 

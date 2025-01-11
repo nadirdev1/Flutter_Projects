@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 final dateFormatter = DateFormat.yMMMd();
 
 class NewExpense extends StatefulWidget {
-  NewExpense({required this.onAddExpense, super.key});
+  const NewExpense({required this.onAddExpense, super.key});
 
   final void Function(Expense) onAddExpense;
 
@@ -62,7 +62,7 @@ class _NewExpenseState extends State<NewExpense> {
         amount: enteredAmount,
         date: _selectedDate!,
         category: _selectedCategory!));
-        Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   @override
@@ -75,7 +75,7 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 50,16,16),
+      padding: const EdgeInsets.fromLTRB(16, 50, 16, 16),
       child: Column(
         children: [
           TextField(
@@ -86,8 +86,10 @@ class _NewExpenseState extends State<NewExpense> {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
+                flex: 1,
                 child: TextField(
                   controller: _numberController,
                   keyboardType: TextInputType.number,
@@ -95,11 +97,10 @@ class _NewExpenseState extends State<NewExpense> {
                       label: Text('Amount'), prefixText: 'CHF '),
                 ),
               ),
-              const SizedBox(
-                width: 16,
-              ),
               Expanded(
+                flex: 2,
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -116,6 +117,7 @@ class _NewExpenseState extends State<NewExpense> {
             height: 16,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DropdownButton(
                 value: _selectedCategory,
@@ -131,15 +133,19 @@ class _NewExpenseState extends State<NewExpense> {
                   });
                 },
               ),
-              const Spacer(),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Cancel')),
-              ElevatedButton(
-                  onPressed: _submitExpenseData,
-                  child: const Text('save Expense')),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Cancel')),
+                  ElevatedButton(
+                      onPressed: _submitExpenseData,
+                      child: const Text('save Expense')),
+                ],
+              ),
             ],
           ),
         ],
